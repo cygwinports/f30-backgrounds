@@ -1,0 +1,49 @@
+NAME="f30-backgrounds"
+VERSION=30.1.2
+RELEASE=1
+CATEGORY="X11"
+SUMMARY="Fedora 30 desktop wallpaper"
+DESCRIPTION="Default wallpaper for the Fedora 30 release, along with a
+collection of selected wallpapers contributed by the Fedora community."
+HOMEPAGE="https://fedoraproject.org/wiki/Design"
+SRC_URI="https://github.com/fedoradesign/backgrounds/releases/download/v${VERSION}/${NAME}-${VERSION}.tar.xz"
+SRC_DIR=${NAME}
+
+ARCH=noarch
+
+PKG_NAMES="${NAME} ${NAME}-extras ${NAME}-animated"
+f30_backgrounds_DOCS="Attribution CC-BY-SA-4.0 README.md"
+f30_backgrounds_CONTENTS="
+	usr/share/backgrounds/f30/default/
+	usr/share/backgrounds/xfce/f30.png
+	usr/share/gnome-background-properties/f30.xml
+	usr/share/mate-background-properties/f30.xml
+	usr/share/wallpapers/F30/
+"
+f30_backgrounds_animated_SUMMARY="Fedora 30 animated wallpapers"
+f30_backgrounds_animated_DOCS="Attribution CC-BY-SA-4.0"
+f30_backgrounds_animated_CONTENTS="
+	usr/share/backgrounds/f30/default-animated/
+	usr/share/gnome-background-properties/f30-animated.xml
+	usr/share/mate-background-properties/f30-animated.xml
+"
+f30_backgrounds_extras_SUMMARY="Fedora 30 extra wallpapers"
+f30_backgrounds_extras_DOCS="Attribution-Extras CC-BY-SA-4.0"
+f30_backgrounds_extras_CONTENTS="
+	usr/share/backgrounds/f30/extras/
+	usr/share/backgrounds/xfce/f30-*
+	usr/share/gnome-background-properties/f30-extras.xml
+	usr/share/mate-background-properties/f30-extras.xml
+	usr/share/wallpapers/F30_*/
+"
+
+src_compile() {
+	cd ${S}
+	cygmake
+}
+
+src_install() {
+	cd ${S}
+	cyginstall
+	mv ${D}/usr/share/{xfce4/backdrops,backgrounds/xfce}
+}
